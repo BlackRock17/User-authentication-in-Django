@@ -7,3 +7,6 @@ urlpatterns = [
     path("", include("new_prj.test_app.urls")),
     path("auth/", include("new_prj.app_auth.urls")),
 ]
+
+
+# lyu123bo321
