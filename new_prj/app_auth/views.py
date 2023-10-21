@@ -1,6 +1,8 @@
 from django import forms
-from django.contrib.auth import views as auth_views, login
+from django.contrib.auth import mixins as auth_mixins
+from django.contrib.auth import views as auth_views, login, get_user_model
 from django.contrib.auth import forms as auth_forms
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views import generic as views
 from django.utils.translation import gettext_lazy as _
@@ -35,9 +37,27 @@ class RegisterUserView(views.CreateView):
         return result
 
 
-class LoginUserView(views.View):
+class LoginUserView(auth_views.LoginView):
+    template_name = 'app_auth/login.html'
+
+
+class LogoutUserView(auth_views.LogoutView):
     pass
 
 
-class LogoutUserView(views.View):
+UserModel = get_user_model()
+
+
+@login_required
+def func_view(request):
     pass
+
+
+class ViewWithPermission(auth_mixins.PermissionRequiredMixin, views.TemplateView):
+    template_name = 'app_auth/users_list.html'
+
+
+class UsersListView(auth_mixins.LoginRequiredMixin, views.ListView):
+    model = UserModel
+    template_name = 'app_auth/users_list.html'
+
