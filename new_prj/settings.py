@@ -123,3 +123,5 @@ LOGIN_REDIRECT_URL = reverse_lazy('register_user')
 LOGOUT_REDIRECT_URL = reverse_lazy('login_user')
 
 LOGIN_URL = reverse_lazy('login_user')
+
+AUTH_USER_MODEL = 'app_auth.AppUser'
